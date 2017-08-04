@@ -1,4 +1,4 @@
-# react-redux-ie8-boilerplate
+# react-router-ie8-boilerplate
 
 ## 程序安装
 ### Node Version
