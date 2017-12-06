@@ -1,15 +1,17 @@
 var path = require('path');
+var fs = require('fs'); 
 var webpack = require('webpack');
 var AssetsPlugin = require('assets-webpack-plugin');
 var ExtractTextPlugin=require('extract-text-webpack-plugin');
+var basePath = 'build';
 module.exports = {
   entry:{
     'entry':'./src/entry.js'
   },
   output: {
-    path: path.join(__dirname, 'build'),
+    path: path.join(__dirname, basePath),
     filename: '[name].[hash].bundle.js',
-    publicPath: '/build/'
+    publicPath: basePath
   },
   plugins: [
     new webpack.NoErrorsPlugin(),
@@ -20,8 +22,11 @@ module.exports = {
       }
     }),
     new AssetsPlugin({
-      filename: 'build/webpack-assets.js',
+      filename: basePath + '/webpack-assets.js',
       processOutput: function (assets) {
+		if (!fs.existsSync(basePath)) {
+            fs.mkdirSync(basePath);
+        }
         return 'window.WEBPACK_ASSETS = ' + JSON.stringify(assets);
       }
     }),
